@@ -31,7 +31,6 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-# Linear regression using gradient descent
 def linear_regression(X1, y, learning_rate=0.01, num_iters=1000):
     X = np.c_[np.ones(len(X1)), X1]  # Add intercept term
     theta = np.zeros((X.shape[1], 1))  # Initialize theta
@@ -43,32 +42,21 @@ def linear_regression(X1, y, learning_rate=0.01, num_iters=1000):
 
     return theta
 
-# Load dataset (with header)
 data = pd.read_csv('50_Startups.csv')
-
-# Use first 3 columns (R&D Spend, Administration, Marketing Spend) as features
 X = data.iloc[:, 0:3].values.astype(float)
-
-# Use the last column (Profit) as target
 y = data.iloc[:, -1].values.reshape(-1, 1)
-
-# Standardize features and target
 scaler_X = StandardScaler()
 scaler_y = StandardScaler()
 X_scaled = scaler_X.fit_transform(X)
 y_scaled = scaler_y.fit_transform(y)
 
-# Train the model
 theta = linear_regression(X_scaled, y_scaled)
 
-# Predict for a new data point
 new_data = np.array([[165349.2, 136897.8, 471784.1]])
 new_scaled = scaler_X.transform(new_data)
 new_scaled_with_bias = np.c_[np.ones((new_scaled.shape[0], 1)), new_scaled]
 prediction_scaled = new_scaled_with_bias.dot(theta)
 prediction = scaler_y.inverse_transform(prediction_scaled)
-
-# Print predicted value
 print(f"Predicted Profit: {prediction}")
 ```
 
